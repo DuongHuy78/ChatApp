@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     dio = Dio(BaseOptions(baseUrl: "https://$ip",
-      connectTimeout: const Duration(seconds: 60),  
+      connectTimeout: const Duration(seconds: 60),   
       receiveTimeout: const Duration(seconds: 60),));
   }
 

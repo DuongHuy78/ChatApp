@@ -54,7 +54,7 @@ class ChatPageState extends State<ChatPage> {
     //function to connect
     try {
       channel = IOWebSocketChannel.connect(
-          "wss://$ip:6060/$myid"); //channel IPV4(your devide) : Port
+          "wss://$ip/$myid");
       channel.stream.listen(
         (message) {
           if (kDebugMode) {

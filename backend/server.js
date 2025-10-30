@@ -38,10 +38,11 @@ const messageSchema = new mongoose.Schema({
 const Message = mongoose.model("Message", messageSchema);
 messageSchema.index({ senderid: 1, receiverid: 1, timestamp: 1 }, { unique: true });
 
-
 const app = express();
 app.use(express.json());
 // const port = 8000; //port for https
+
+
 
 //login and signup
 
@@ -114,14 +115,27 @@ app.get("/messages/:userid1/:userid2", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://127.0.0.1:${port}`);
+  console.log(`Example app listening at ${port}`);
 });
+const http = require("http");
+
+// create http server from express
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ noServer: true });
+
+server.on("upgrade", (request, socket, head) => {
+  // Optionally validate auth here using request.headers, cookies, etc.
+  wss.handleUpgrade(request, socket, head, (ws) => {
+    wss.emit("connection", ws, request);
+  });
+});
+
 
 var webSockets = {};
 
-const wss = new WebSocket.Server({ port: 6060 }); //run websocket server with port 6060
+//const wss = new WebSocket.Server({ port: 6060 }); //run websocket server with port 6060
 wss.on("connection", function (ws, req) {
-  var userID = req.url.substr(1); //get userid from URL ip:6060/userid
+  var userID = req.url.substr(1); //get userid from URL /userid
   webSockets[userID] = ws; //add new user to the connection list
 
   console.log("User " + userID + " Connected ");
