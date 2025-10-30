@@ -114,9 +114,9 @@ app.get("/messages/:userid1/:userid2", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Example app listening at ${port}`);
+// });
 const http = require("http");
 
 // create http server from express
@@ -130,6 +130,9 @@ server.on("upgrade", (request, socket, head) => {
   });
 });
 
+server.listen(port, () => {
+  console.log(`HTTP + WS server listening on port ${port}`);
+});
 
 var webSockets = {};
 
