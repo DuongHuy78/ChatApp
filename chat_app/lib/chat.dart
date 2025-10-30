@@ -29,13 +29,15 @@ class ChatPageState extends State<ChatPage> {
   late String receiverid;
   // swap myid and receiverid value on another mobile to test send and receive
   String auth = "addauthkeyifrequired"; //auth key
-  String ip ="192.168.1.118" ;
+  String ip ="chatapp-6ehz.onrender.com" ;
 
   List<MessageData> msglist = [];
 
   TextEditingController msgtext = TextEditingController();
 
-  late Dio dio = Dio(BaseOptions(baseUrl: "http://$ip:8000"));
+  late Dio dio = Dio(BaseOptions(baseUrl: "https://$ip",
+    connectTimeout: const Duration(seconds: 60), 
+      receiveTimeout: const Duration(seconds: 60),));
 
   @override
   void initState() {
@@ -52,7 +54,7 @@ class ChatPageState extends State<ChatPage> {
     //function to connect
     try {
       channel = IOWebSocketChannel.connect(
-          "ws://$ip:6060/$myid"); //channel IPV4(your devide) : Port
+          "wss://$ip:6060/$myid"); //channel IPV4(your devide) : Port
       channel.stream.listen(
         (message) {
           if (kDebugMode) {

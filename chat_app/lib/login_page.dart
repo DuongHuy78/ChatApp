@@ -15,14 +15,16 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
-  String ip ="192.168.1.118" ;
+  String ip ="chatapp-6ehz.onrender.com" ;
   late Dio dio;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    dio = Dio(BaseOptions(baseUrl: "http://$ip:8000"));
+    dio = Dio(BaseOptions(baseUrl: "https://$ip",
+      connectTimeout: const Duration(seconds: 60),  
+      receiveTimeout: const Duration(seconds: 60),));
   }
 
   @override

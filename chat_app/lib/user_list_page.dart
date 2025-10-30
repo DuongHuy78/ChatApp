@@ -13,12 +13,14 @@ class UserListPage extends StatefulWidget {
 class _UserListPageState extends State<UserListPage> {
   List<dynamic> users = [];
   late Dio dio;
-  String ip = "192.168.1.118";
+  String ip = "chatapp-6ehz.onrender.com";
 
   @override
   void initState() {
     super.initState();
-    dio = Dio(BaseOptions(baseUrl: "http://$ip:8000"));
+    dio = Dio(BaseOptions(baseUrl: "https://$ip",
+      connectTimeout: const Duration(seconds: 60), 
+      receiveTimeout: const Duration(seconds: 60),));
     _loadUsers();
   }
 
