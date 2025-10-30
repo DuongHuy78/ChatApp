@@ -1,3 +1,4 @@
+require('dotenv').config();
 const WebSocket = require("ws");
 const express = require("express");
 const moment = require("moment");
@@ -11,7 +12,11 @@ const jwt = require("jsonwebtoken");
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // });
-mongoose.connect("mongodb://127.0.0.1/chat");
+// mongoose.connect("mongodb://127.0.0.1/chat");
+
+mongoose.connect(process.env.MONGODB_URI);
+const port = process.env.PORT || 8000;
+const wsPort = process.env.WS_PORT || 6060;
 
 // Define user schema and model
 const userSchema = new mongoose.Schema({
@@ -36,7 +41,7 @@ messageSchema.index({ senderid: 1, receiverid: 1, timestamp: 1 }, { unique: true
 
 const app = express();
 app.use(express.json());
-const port = 8000; //port for https
+// const port = 8000; //port for https
 
 //login and signup
 
